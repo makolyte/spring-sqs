@@ -7,6 +7,8 @@ import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/sqs")
 public class SqsController {
@@ -20,7 +22,7 @@ public class SqsController {
 
     @PostMapping("/quotes")
     @ResponseStatus(HttpStatus.CREATED)
-    public void sendQuote(@RequestBody Quote quote) {
+    public void sendQuote(@RequestBody @Valid Quote quote) {
         LOG.info("Sending quote {} to SQS", quote);
         this.queueMessagingTemplate.convertAndSend("QuoteQueue", quote);
     }

@@ -3,7 +3,10 @@ package com.makolyte.springsqsstarter.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
+
 public class Quote {
+    @NotNull
     private final String text;
     private final String author;
 
