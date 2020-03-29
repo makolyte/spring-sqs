@@ -1,0 +1,99 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Sample stack for Spring Aws Sqs",
+  "Resources": {
+    "QuoteQueue": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {}
+    },
+    "SqsAdmin": {
+      "Type": "AWS::IAM::User",
+      "Properties": {
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "giveaccesstoqueueonly",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "sqs:*"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::GetAtt": [
+                        "QuoteQueue",
+                        "Arn"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Deny",
+                  "Action": [
+                    "sqs:*"
+                  ],
+                  "NotResource": [
+                    {
+                      "Fn::GetAtt": [
+                        "QuoteQueue",
+                        "Arn"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "PolicyName": "readonlyaccesstocloudformation",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "cloudformation:Describe*",
+                    "cloudformation:EstimateTemplateCost",
+                    "cloudformation:Get*",
+                    "cloudformation:List*",
+                    "cloudformation:ValidateTemplate",
+                    "cloudformation:Detect*"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "SqsAdminAccessKey": {
+      "Type": "AWS::IAM::AccessKey",
+      "Properties": {
+        "UserName": {
+          "Ref": "SqsAdmin"
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "AccessKeyForSqsAdmin": {
+      "Value": {
+        "Ref": "SqsAdminAccessKey"
+      }
+    },
+    "SecretKeyForSqsAdmin": {
+      "Value": {
+        "Fn::GetAtt": [
+          "SqsAdminAccessKey",
+          "SecretAccessKey"
+        ]
+      }
+    }
+  }
+}
