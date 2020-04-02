@@ -1,7 +1,7 @@
 package com.makolyte.springsqsstarter.service;
 
-import com.makolyte.springsqsstarter.dto.IncomingQuote;
 import com.makolyte.springsqsstarter.entity.QuoteEntity;
+import com.makolyte.springsqsstarter.dto.Quote;
 import com.makolyte.springsqsstarter.repository.QuoteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class SqsServiceImplTest {
     public void saveQuote_quoteExists_itIsNotSaved() {
         String awsMessageId = "12345";
         when(quoteRepository.existsByAwsMessageId(awsMessageId)).thenReturn(true);
-        IncomingQuote incomingQuote = mock(IncomingQuote.class);
+        Quote incomingQuote = mock(Quote.class);
 
         sqsServiceImpl.saveQuote(
                 incomingQuote,
@@ -45,7 +45,7 @@ class SqsServiceImplTest {
         String awsMessageId = "12345";
         String receivedTimestamp = "1585818038";
         when(quoteRepository.existsByAwsMessageId(awsMessageId)).thenReturn(false);
-        IncomingQuote incomingQuote = new IncomingQuote(
+        Quote incomingQuote = new Quote(
                 "The greatest glory in living lies not in never falling, " +
                         "but in rising every time we fall.",
                 "Nelson Mandela"

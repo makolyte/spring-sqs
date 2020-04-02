@@ -1,7 +1,6 @@
 package com.makolyte.springsqsstarter.controller;
 
-import com.makolyte.springsqsstarter.dto.IncomingQuote;
-import com.makolyte.springsqsstarter.model.Quote;
+import com.makolyte.springsqsstarter.dto.Quote;
 import com.makolyte.springsqsstarter.service.SqsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +37,10 @@ public class SqsController {
 
     @SqsListener(QUOTE_QUEUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void receiveQuote(IncomingQuote incomingQuote,
+    public void receiveQuote(@Valid Quote quote,
                              @Header("MessageId") String messageId,
                              @Header("ApproximateFirstReceiveTimestamp") String approximateFirstReceiveTimestamp) {
-        LOG.info("Received quote {} with messageId {}", incomingQuote, messageId);
-        sqsService.saveQuote(incomingQuote, messageId, approximateFirstReceiveTimestamp);
+        LOG.info("Received quote {} with messageId {}", quote, messageId);
+        sqsService.saveQuote(quote, messageId, approximateFirstReceiveTimestamp);
     }
 }

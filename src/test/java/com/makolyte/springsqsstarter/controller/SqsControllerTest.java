@@ -1,7 +1,7 @@
 package com.makolyte.springsqsstarter.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.makolyte.springsqsstarter.model.Quote;
+import com.makolyte.springsqsstarter.dto.Quote;
 import com.makolyte.springsqsstarter.service.SqsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

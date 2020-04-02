@@ -1,7 +1,7 @@
 package com.makolyte.springsqsstarter.service;
 
-import com.makolyte.springsqsstarter.dto.IncomingQuote;
 import com.makolyte.springsqsstarter.entity.QuoteEntity;
+import com.makolyte.springsqsstarter.dto.Quote;
 import com.makolyte.springsqsstarter.repository.QuoteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ public class SqsServiceImpl implements SqsService {
     }
 
     @Override
-    public void saveQuote(IncomingQuote incomingQuote, String messageId, String approximateFirstReceiveTimestamp) {
+    public void saveQuote(Quote incomingQuote, String messageId, String approximateFirstReceiveTimestamp) {
         if (quoteRepository.existsByAwsMessageId(messageId)) {
             LOG.warn("Quote with AWS Message ID {} already exists", messageId);
         } else {
