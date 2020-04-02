@@ -2,6 +2,7 @@ package com.makolyte.springsqsstarter.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.makolyte.springsqsstarter.model.Quote;
+import com.makolyte.springsqsstarter.service.SqsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,6 +22,9 @@ class SqsControllerTest {
 
     @MockBean
     private QueueMessagingTemplate queueMessagingTemplate;
+
+    @MockBean
+    private SqsService sqsService;
 
     @Test
     public void sendQuoteToSqs() throws Exception {
