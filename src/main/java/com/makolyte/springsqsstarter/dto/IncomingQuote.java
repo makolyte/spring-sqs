@@ -9,6 +9,11 @@ public class IncomingQuote {
 
     private String author;
 
+    public IncomingQuote(@NotNull String text, String author) {
+        this.text = text;
+        this.author = author;
+    }
+
     public String getText() {
         return text;
     }
